@@ -28,36 +28,36 @@ public class LogoutTest {
     @Test
     public void testLogout() {
 
-        // ===== 1. Click My Account =====
+
         By myAccount = By.xpath("//span[contains(text(),'My Account')]");
         wait.until(ExpectedConditions.elementToBeClickable(myAccount)).click();
 
-        // ===== 2. Click Login =====
+
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.linkText("Login")
         )).click();
 
-        // ===== 3. Nhập Email =====
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.id("input-email")
         )).sendKeys("nguyenhanh@gmail.com");
 
-        // ===== 4. Nhập Password =====
+
         driver.findElement(By.id("input-password"))
                 .sendKeys("020103");
 
-        // ===== 5. Click Login =====
+
         wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//form[contains(@action,'login')]//button[@type='submit']")
         )).click();
 
-        // ===== WAIT KẾT QUẢ =====
+
         wait.until(ExpectedConditions.or(
                 ExpectedConditions.urlContains("account/account"),
                 ExpectedConditions.presenceOfElementLocated(By.cssSelector(".alert-danger"))
         ));
 
-        // ===== CHECK =====
+
         String currentUrl = driver.getCurrentUrl();
         System.out.println("URL: " + currentUrl);
 
@@ -68,17 +68,17 @@ public class LogoutTest {
             System.out.println("LOGIN FAIL: " + error);
             Assert.fail("Login thất bại");
         }
-        // ===== 7. Click My Account (mở dropdown) =====
+
         wait.until(ExpectedConditions.elementToBeClickable(myAccount)).click();
 
-        // ===== 8. Đợi Logout xuất hiện =====
+
         By logoutBtn = By.xpath("//a[contains(@href,'route=account/logout')]");
         wait.until(ExpectedConditions.visibilityOfElementLocated(logoutBtn));
 
-        // ===== 9. Click Logout =====
+
         wait.until(ExpectedConditions.elementToBeClickable(logoutBtn)).click();
 
-        // ===== 10. Verify logout =====
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//h1[contains(text(),'Account Logout')]")
         ));
