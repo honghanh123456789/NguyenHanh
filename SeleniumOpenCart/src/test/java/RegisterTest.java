@@ -13,8 +13,6 @@ public class RegisterTest {
     WebDriverWait wait;
 
 
-    // SETUP / TEARDOWN
-
     @BeforeMethod
     public void setup() {
 
@@ -29,7 +27,6 @@ public class RegisterTest {
     }
 
 
-    // HELPER FUNCTIONS
 
     public void openRegisterPage() {
         driver.get("http://localhost/opencart/index.php?route=account/register");
@@ -51,30 +48,30 @@ public class RegisterTest {
 
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
-        // Tìm checkbox trước
+
         WebElement privacy = wait.until(
                 ExpectedConditions.presenceOfElementLocated(By.name("agree"))
         );
 
-        // Scroll xuống khu vực checkbox (đảm bảo luôn thấy phần dưới)
+
         js.executeScript("arguments[0].scrollIntoView({block:'center'});", privacy);
 
-        // Tick Privacy nếu cần
+
         if (agreePolicy) {
             wait.until(ExpectedConditions.elementToBeClickable(privacy));
             js.executeScript("arguments[0].click();", privacy);
         }
 
-        // Tìm nút Continue
+
         WebElement btn = wait.until(
                 ExpectedConditions.elementToBeClickable(By.cssSelector("button.btn-primary"))
         );
-        // Scroll tới button
+
         js.executeScript("arguments[0].scrollIntoView({block:'center'});", btn);
         js.executeScript("arguments[0].click();", btn);
     }
 
-    // VERIFY
+
 
     public void verifySuccess() {
         wait.until(ExpectedConditions.urlContains("account/success"));
@@ -100,7 +97,6 @@ public class RegisterTest {
         Assert.assertTrue(isStillRegisterPage || hasError, "Không thấy lỗi!");
     }
 
-    // TEST CASES
 
     // TC01 – Đăng ký thành công
     @Test
