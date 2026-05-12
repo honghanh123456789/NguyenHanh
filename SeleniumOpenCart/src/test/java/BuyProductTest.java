@@ -53,7 +53,7 @@ public class BuyProductTest {
 
         driver.findElement(By.xpath("//form[contains(@action,'account/login')]//button[@type='submit']")).click();
 
-        // ===== VERIFY LOGIN SUCCESS (đang ở My Account) =====
+        //  VERIFY LOGIN SUCCESS (đang ở My Account) 
         wait.until(ExpectedConditions.urlContains("route=account/account"));
 
         //  2. CLICK Phones & PDAs
@@ -76,7 +76,7 @@ public class BuyProductTest {
 
         safeClick(iphone);
 
-        //  4. ADD TO CART
+        //  ADD TO CART
         WebElement addToCart = wait.until(ExpectedConditions.elementToBeClickable(By.id("button-cart")));
         safeClick(addToCart);
 
@@ -85,19 +85,19 @@ public class BuyProductTest {
                 By.cssSelector(".alert-success")
         ));
 
-        //  5. CLICK GIỎ HÀNG
+        //  CLICK GIỎ HÀNG
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[@title='Shopping Cart']")
         )));
 
         wait.until(ExpectedConditions.urlContains("route=checkout/cart"));
 
-        //  6. CLICK CHECKOUT
+        //  CLICK CHECKOUT
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.linkText("Checkout")
         )));
 
-        //  CHỌN ADDRESS CHẮC CHẮN
+        //  CHỌN ADDRESS 
         WebElement addressElement = wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.name("address_id")
         ));
@@ -197,7 +197,6 @@ public class BuyProductTest {
                 By.cssSelector(".product-thumb")
         ));
 
-        //  SCROLL xuống để chắc chắn thấy product
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,400)");
 
         //  CLICK iPhone
@@ -233,12 +232,12 @@ public class BuyProductTest {
                 By.xpath("//label[contains(.,'I want to use a new address')]")
         )));
 
-        //  ĐỢI FORM LOAD
+        
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.name("firstname")
         ));
 
-        //  SCROLL xuống nút Continue
+     
         WebElement continueBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//button[contains(text(),'Continue')]")
         ));
@@ -247,7 +246,6 @@ public class BuyProductTest {
                 "arguments[0].scrollIntoView({block:'center'});", continueBtn
         );
 
-        //  CLICK CONTINUE (KHÔNG NHẬP GÌ)
         safeClick(continueBtn);
 
     }
@@ -263,61 +261,61 @@ public class BuyProductTest {
                 By.linkText("Phones & PDAs")
         )));
 
-        //  ĐỢI PRODUCT LIST LOAD
+        
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".product-thumb")
         ));
 
-        //  SCROLL xuống
+        
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,400)");
 
-        // ===== CLICK iPhone =====
+
         WebElement iphone = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[@class='product-thumb']//a[contains(text(),'iPhone')]")
         ));
 
         safeClick(iphone);
 
-        // ===== ADD TO CART =====
+    
         WebElement addToCart = wait.until(ExpectedConditions.elementToBeClickable(By.id("button-cart")));
         safeClick(addToCart);
 
-        // Verify add success
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".alert-success")
         ));
 
-        // =====  CLICK GIỎ HÀNG =====
+
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//a[@title='Shopping Cart']")
         )));
 
         wait.until(ExpectedConditions.urlContains("route=checkout/cart"));
 
-        // ===== CLICK CHECKOUT =====
+
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.linkText("Checkout")
         )));
 
-        // ===== CHỌN GUEST CHECKOUT =====
+        
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//label[contains(text(),'Guest Checkout')]")
         )));
 
 
-        // ===== WAIT FORM LOAD =====
+        
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.name("firstname")
         ));
-        // ===== FILL FORM =====
+
         driver.findElement(By.name("firstname")).sendKeys("hanh");
         driver.findElement(By.name("lastname")).sendKeys("nguyen");
         driver.findElement(By.name("email")).sendKeys("test@gmail.com");
 
-        // ===== SCROLL xuống  =====
+        
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,400)");
 
-        // ===== WAIT FORM LOAD =====
+        
         WebElement address = wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.name("shipping_address_1")
         ));
@@ -326,24 +324,24 @@ public class BuyProductTest {
         driver.findElement(By.name("shipping_city")).sendKeys("Hanoi");
         driver.findElement(By.name("shipping_postcode")).sendKeys("100abcd");
 
-        // ===== CHỌN COUNTRY =====
+        
         Select country = new Select(wait.until(ExpectedConditions.elementToBeClickable(
                 By.name("shipping_country_id")
         )));
         country.selectByVisibleText("Viet Nam");
 
-        // ===== ĐỢI REGION LOAD THEO COUNTRY =====
+
         wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(
                 By.cssSelector("select[name='shipping_zone_id'] option"), 1
         ));
 
-        // ===== CHỌN REGION: HA NOI =====
+        
         Select zone = new Select(wait.until(ExpectedConditions.elementToBeClickable(
                 By.name("shipping_zone_id")
         )));
         zone.selectByVisibleText("Ha Noi");
 
-        // ===== 8. CONTINUE ADDRESS =====
+
         WebElement continueBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//button[contains(text(),'Continue')]")
         ));
@@ -353,10 +351,10 @@ public class BuyProductTest {
         );
         safeClick(continueBtn);
 
-        // SCROLL lên trên
+        
         ((JavascriptExecutor) driver).executeScript("window.scrollTo(0,0)");
 
-        // ===== 9. SHIPPING =====
+
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("(//button[contains(text(),'Choose')])[1]")
         )));
@@ -369,7 +367,7 @@ public class BuyProductTest {
                 By.id("button-shipping-method")
         )));
 
-        // ===== 10. PAYMENT =====
+        
         safeClick(wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("(//button[contains(text(),'Choose')])[2]")
         )));
@@ -382,10 +380,10 @@ public class BuyProductTest {
                 By.id("button-payment-method")
         )));
 
-        // ===== SCROLL xuống  =====
+
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,400)");
 
-        // ===== 12. CONFIRM =====
+
         WebElement confirmBtn = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//button[contains(text(),'Confirm')]")
         ));
@@ -397,7 +395,7 @@ public class BuyProductTest {
 
         safeClick(confirmBtn);
 
-        // ===== 13. VERIFY SUCCESS =====
+
         WebElement success = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//h1[contains(text(),'Your order has been placed')]")
         ));
