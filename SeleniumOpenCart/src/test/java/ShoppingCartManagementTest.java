@@ -22,7 +22,7 @@ public class ShoppingCartManagementTest {
     }
 
 
-    // SAFE CLICK
+
     public void safeClick(WebElement element) {
         try {
             ((JavascriptExecutor) driver).executeScript(
@@ -34,12 +34,11 @@ public class ShoppingCartManagementTest {
     }
 
 
-    // ADD PRODUCT
     public void addProductByName( String productName) {
 
         driver.get(baseUrl);
 
-        // Scroll xuống
+
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,700)");
 
         WebElement product = wait.until(ExpectedConditions
@@ -47,20 +46,19 @@ public class ShoppingCartManagementTest {
 
         safeClick(product);
 
-        // WAIT TRANG PRODUCT LOAD
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("button-cart")));
 
         WebElement addToCart = wait.until(ExpectedConditions
                 .elementToBeClickable(By.id("button-cart")));
-        // click add to cart
+
         safeClick(addToCart);
 
-        // Wait thông báo success
+
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector(".alert-success")));
     }
 
-    // OPEN CART
+
     public void openCart() {
 
         WebElement cartBtn = wait.until(ExpectedConditions
@@ -68,7 +66,7 @@ public class ShoppingCartManagementTest {
 
         safeClick(cartBtn);
 
-        // Đợi cart page load
+
         wait.until(ExpectedConditions.or(
                 ExpectedConditions.urlContains("route=checkout/cart"),
                 ExpectedConditions.visibilityOfElementLocated(By.tagName("body"))
@@ -76,7 +74,7 @@ public class ShoppingCartManagementTest {
     }
 
 
-    // REMOVE ALL
+
     public void removeAllProducts() {
 
         while (true) {
@@ -86,7 +84,6 @@ public class ShoppingCartManagementTest {
 
                 safeClick(removeBtn);
 
-                // đợi reload
                 wait.until(ExpectedConditions.stalenessOf(removeBtn));
 
             } catch (Exception e) {
@@ -129,10 +126,8 @@ public class ShoppingCartManagementTest {
     @Test(priority = 3)
     public void TC03_viewCartWithProduct() {
 
-        //addProductByName("MacBook");
         openCart();
 
-        // Đợi row sản phẩm xuất hiện
         WebElement productRow = wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.xpath("//div[@id='shopping-cart']//table//tbody//tr")));
 
@@ -145,7 +140,6 @@ public class ShoppingCartManagementTest {
     @Test(priority = 4)
     public void TC04_removeOneProduct() {
 
-        //addProductByName("MacBook");
         openCart();
 
         WebElement removeBtn = wait.until(ExpectedConditions
@@ -166,23 +160,18 @@ public class ShoppingCartManagementTest {
     @Test(priority = 5)
     public void TC5_removeAllProductsTest() {
 
-        //  ADD 2 SẢN PHẨM
         addProductByName("MacBook");
         addProductByName("iPhone");
 
-        // MỞ CART
         openCart();
 
-        //  VERIFY CÓ 2 SẢN PHẨM
         int rows = wait.until(ExpectedConditions
                         .presenceOfAllElementsLocatedBy(By.xpath("//div[@id='shopping-cart']//table//tbody//tr"))).size();
 
         Assert.assertEquals(rows, 2);
 
-        // XÓA TẤT CẢ
         removeAllProducts();
 
-        // VERIFY CART RỖNG
         WebElement emptyMsg = wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.xpath("//p[contains(text(),'Your shopping cart is empty')]")));
 
@@ -190,41 +179,33 @@ public class ShoppingCartManagementTest {
 
     }
 
-    // TC6: Add product với số lượng âm (EXPECTED FAIL)
+    // TC6: Add product với số lượng âm 
     @Test(priority = 6)
     public void TC06_addProductWithNegativeQuantity() {
 
-        // 1. TRUY CẬP TRANG CHỦ
         driver.get(baseUrl);
 
-        // Scroll xuống để thấy sản phẩm
         ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,700)");
 
-        // 2. CLICK SẢN PHẨM
         WebElement product = wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.xpath("//a[text()='MacBook']")));
 
         safeClick(product);
 
-        // 3. ĐỢI TRANG PRODUCT LOAD
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("button-cart")));
 
-        // 4. NHẬP SỐ LƯỢNG ÂM
         WebElement qtyInput = wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.id("input-quantity")));
 
         qtyInput.clear();
         qtyInput.sendKeys("-1");
 
-        // 5. CLICK ADD TO CART
         WebElement addToCart = wait.until(ExpectedConditions
                 .elementToBeClickable(By.id("button-cart")));
         safeClick(addToCart);
 
-        // MỞ CART ĐỂ CHECK
         openCart();
 
-        // CỐ TÌNH EXPECT có sản phẩm → nhưng thực tế KHÔNG có → FAIL
         WebElement productRow = wait.until(ExpectedConditions
                 .visibilityOfElementLocated(By.xpath("//div[@id='shopping-cart']//table//tbody//tr")));
 
