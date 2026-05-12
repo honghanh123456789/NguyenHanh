@@ -25,7 +25,6 @@ public class SearchTest {
         driver.get(baseUrl);
     }
 
-    // ===== Helper =====
     private void search(String keyword) {
         WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("search")));
         searchBox.clear();
@@ -37,9 +36,8 @@ public class SearchTest {
         return driver.findElements(By.cssSelector(".product-thumb"));
     }
 
-    // ==============================
     // TC01 - Search thành công
-    // ==============================
+
     @Test
     public void TC01_searchValidProduct() {
         search("iphone");
@@ -50,9 +48,9 @@ public class SearchTest {
         Assert.assertTrue(products.size() > 0, "Không tìm thấy sản phẩm phù hợp");
     }
 
-    // ==============================
+
     // TC02 - Không có kết quả
-    // ==============================
+    
     @Test
     public void TC02_searchNoResult() {
         search("dress");
@@ -63,22 +61,21 @@ public class SearchTest {
         Assert.assertTrue(message.isDisplayed());
     }
 
-    // ==============================
     // TC03 - Không nhập gì
-    // ==============================
+
     @Test
     public void TC03_searchEmpty() {
         search("");
 
         List<WebElement> products = driver.findElements(By.cssSelector(".product-thumb"));
 
-        // Không crash là pass
+
         Assert.assertNotNull(products);
     }
 
-    // ==============================
+
     // TC04 - Nhập space
-    // ==============================
+
     @Test
     public void TC04_searchSpace() {
         search("   ");
@@ -93,9 +90,9 @@ public class SearchTest {
         );
     }
 
-    // ==============================
+
     // TC05 - Ký tự đặc biệt
-    // ==============================
+
     @Test
     public void TC05_searchSpecialCharacter() {
         search("@#$%^");
@@ -104,9 +101,9 @@ public class SearchTest {
         Assert.assertTrue(driver.getCurrentUrl().contains("search"));
     }
 
-    // ==============================
+
     // TC06 - Không phân biệt hoa thường
-    // ==============================
+
     @Test
     public void TC06_searchCaseInsensitive() {
         search("iphone");
@@ -122,15 +119,15 @@ public class SearchTest {
         Assert.assertEquals(firstLower, firstUpper, "Search bị phân biệt hoa thường");
     }
 
-    // ==============================
+
     // TC07 - Gợi ý sản phẩm
-    // ==============================
+
     @Test
     public void TC07_searchSuggestion() {
         WebElement searchBox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("search")));
         searchBox.sendKeys("iph");
 
-        // OpenCart mặc định KHÔNG có autocomplete → cần kiểm tra nếu có custom
+
         try {
             WebElement suggestion = wait.until(ExpectedConditions.visibilityOfElementLocated(
                     By.cssSelector(".dropdown-menu")));
